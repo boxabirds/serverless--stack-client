@@ -22,7 +22,7 @@ class App extends Component {
               <LinkContainer to="/signup">              
                 <NavItem>Signup</NavItem> 
               </LinkContainer>
-              <LinkContainer to="/signup">              
+              <LinkContainer to="/login">              
                 <NavItem>Login</NavItem>
               </LinkContainer>
             </Nav>
