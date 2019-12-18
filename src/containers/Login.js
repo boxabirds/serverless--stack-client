@@ -5,6 +5,12 @@ import { Auth } from "aws-amplify";
 import LoaderButton from '../components/LoaderButton';
 import { useFormFields } from "../libs/hooksLib";
 
+
+function validateLoginForm(fields) {
+  return fields.email.length > 0 && fields.password.length > 0;
+}
+
+
 export default function Login(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
@@ -12,9 +18,6 @@ export default function Login(props) {
     password: ""
   });
 
-  function validateForm() {
-    return fields.email.length > 0 && fields.password.length > 0;
-  }
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -54,7 +57,7 @@ export default function Login(props) {
           type="submit"
           bsSize="large"
           isLoading={isLoading}
-          disabled={!validateForm()}
+          disabled={!validateLoginForm(fields)}
         >
           Login
           </LoaderButton>
