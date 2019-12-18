@@ -3,7 +3,9 @@ import {
   HelpBlock,
   FormGroup,
   FormControl,
-  ControlLabel
+  ControlLabel,
+  Modal,
+  Button
 } from "react-bootstrap";
 
 import LoaderButton from "../components/LoaderButton";
@@ -35,6 +37,32 @@ export default function Signup(props) {
     return fields.confirmationCode.length > 0;
   }
 
+  // All the interactive bits and pieces required
+  // to get a modal dialog going. 
+  const [show, setShow] = useState(false);  
+
+  // Button handlers
+  const handleClose = () => setShow(false);
+  const handleForgotPassword = () => props.history.push("/");
+
+  function renderForgotPasswordAlertIf(title, message) {
+    return (
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{message}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleForgotPassword}>
+            Forgot Password…
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -53,7 +81,8 @@ export default function Signup(props) {
         // TODO add a forgotten password component to this 
         // TODO there's a security vector here by feeding back
         // that the user exists. 
-        alert("Someone already registered that email address.");
+        //alert("Someone already registered that email address.");
+        setShow(true);
       } else {
         alert(e.message);
       }
@@ -106,6 +135,7 @@ export default function Signup(props) {
   function renderForm() {
     return(
       <form onSubmit={handleSubmit}>
+        {renderForgotPasswordAlertIf("That account exists", "Someone (hopefully you?) has alread an account registered with that address.")}
         <FormGroup controlId="email" bsSize="large">
           <ControlLabel>Email</ControlLabel>
           <FormControl

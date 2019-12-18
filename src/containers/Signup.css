@@ -14,3 +14,10 @@
   padding-bottom: 10px;
   color: #999;
 }
+
+.modal-container {
+  position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute;
+}
