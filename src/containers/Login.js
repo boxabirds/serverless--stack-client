@@ -25,9 +25,11 @@ export default function Login(props) {
 
     try {
       await Auth.signIn(fields.email, fields.password);
+      setIsLoading(false);
       props.userHasAuthenticated(true);
-      props.history.push("/forgot-password");
+      props.history.push("/notes/new");
     } catch (e) {
+      setIsLoading(false);
       alert(e.message);
     }
   }
