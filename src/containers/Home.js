@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from "react";
 import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { API } from "aws-amplify";
+import { API, Logger } from "aws-amplify";
 import "./Home.css";
 
 export default function Home(props) {
@@ -9,16 +9,20 @@ export default function Home(props) {
   const [notes, setNotes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  
   useEffect(() => {
     async function onLoad() {
       if (!props.isAuthenticated) {
         return;
       }
+      const l = new Logger("main");
 
       try {
+        l.debug("Calling loadNotes()");
         const notes = await loadNotes();
         setNotes(notes);
       } catch (e) {
+        l.error( "Hit exception: " + e);
         alert(e);
       }
       setIsLoading(false);
@@ -37,7 +41,7 @@ export default function Home(props) {
     // a separate UI element. 
     return [{}].concat(notes).map((note, i) =>
       i !== 0 ? (
-        <LinkContainer key={note.noteId} to={`/notes/{$note.noteId}`}>
+        <LinkContainer key={note.noteId} to={`/notes/${note.noteId}`}>
           <ListGroupItem header={note.content.trim().split("\n"[0])}>
             {"Created: " + new Date(note.createdAt).toLocaleString()}
           </ListGroupItem>

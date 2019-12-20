@@ -7,6 +7,7 @@ import Login from "./containers/Login";
 import Signup from "./containers/Signup";
 import ResetPassword from "./containers/ResetPassword";
 import NewNote from "./containers/NewNote";
+import Note from "./containers/Note";
 import NotFound from "./containers/NotFound";
 
 export default function Routes({ appProps }) {
@@ -17,6 +18,7 @@ export default function Routes({ appProps }) {
       <AppliedRoute path="/signup" exact component={Signup} appProps={appProps} />
       <AppliedRoute path="/reset-password" exact component={ResetPassword} appProps={appProps} />
       <AppliedRoute path="/notes/new" exact component={NewNote} appProps={appProps} />
+      <AppliedRoute path="/notes/:id" exact component={Note} appProps={appProps} />
       { /* Last entry is our fallback -- default */ }
       <Route component={NotFound} />
     </Switch>
